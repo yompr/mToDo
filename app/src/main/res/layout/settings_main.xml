@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Username/email"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/authUsername"
+        tools:text="Username/email" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/authUsernameField" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/authPasswd"
+        tools:text="Password"
+        android:layout_alignTop="@+id/authPasswdField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/authPasswdField"
+        android:layout_below="@+id/authUsernameField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp" />
+
+    <TextView
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
+        android:layout_width="189dp"
+        android:layout_height="wrap_content"
+        android:text="Authentication method"
+        android:layout_below="@+id/authPasswdField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp"
+        android:id="@+id/textView" />
+
+    <RadioGroup
+        android:layout_width="114dp"
+        android:layout_height="98dp"
+        android:checkedButton="@+id/authEmailChoice"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/authPasswdField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RadioButton
+            android:text="Google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/authGoogleChoice"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="Email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/authEmailChoice"
+            android:layout_weight="1" />
+
+    </RadioGroup>
+
+    <Button
+        android:text="Log In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginButton"
+        android:layout_below="@+id/radioGroup"
+        android:layout_alignRight="@+id/authUsername"
+        android:layout_alignEnd="@+id/authUsername" />
+
+</LinearLayout>
