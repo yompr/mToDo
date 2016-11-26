@@ -82,6 +82,7 @@
         android:id="@+id/loginButton"
         android:layout_below="@+id/radioGroup"
         android:layout_alignRight="@+id/authUsername"
-        android:layout_alignEnd="@+id/authUsername" />
+        android:layout_alignEnd="@+id/authUsername"
+        style="@style/Widget.AppCompat.Button" />
 
 </LinearLayout>
