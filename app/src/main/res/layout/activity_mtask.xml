@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.michaelpreilly.apps.mtodo.MTaskActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchorGravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:text="Task Name:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/taskNameView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/taskNameEdit" />
+
+            <TextView
+                android:text="Project:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/projectView"
+                android:elevation="1dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:ems="10"
+                android:id="@+id/projectEdit" />
+
+            <TextView
+                android:text="Status:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statusView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/statusEdit" />
+
+            <TextView
+                android:text="Target Date:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/targetDateView" />
+
+            <EditText
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:focusable="false"
+                android:id="@+id/targetDateEditText" />
+
+            <TextView
+                android:text="Requestor:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/requestorView" />
+
+            <EditText
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Person Requesting"
+                android:ems="10"
+                android:id="@+id/requestorEdit" />
+
+            <TextView
+                android:text="Assigned to:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/assignedToView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Person Assigned To"
+                android:ems="10"
+                android:id="@+id/assignedToEdit" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

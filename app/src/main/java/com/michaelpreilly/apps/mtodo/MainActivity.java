@@ -22,10 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.R.drawable.ic_lock_lock;
 
 
-// TODO: Neet to create auth state listeners
+// TODO: Need to create auth state listeners
 // TODO: login works, but handling the success/failure of a login doesn't work right
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername;
     private String mPhotoUrl;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    public static DataSnapshot projectData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
                // If logged in do the add activity
                 // if not do the login activity
                 if (mFirebaseAuth.getCurrentUser() != null) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    Intent intent = new Intent(view.getContext(), MTaskActivity.class);
+                    startActivityForResult(intent,0);
+
+                            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
                 // Tge below works, but it's not where I want to do it
@@ -97,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                Log.d("MPR-TEST", "Value is: " + value);
+               Log.d("MPR-TEST", "Value is: " + value);
             }
 
             @Override
@@ -107,6 +115,26 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+            DatabaseReference projects = database.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2/Projects");
+            projects.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    projectData = dataSnapshot;
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w("MPR-PROJECT-CANCEL", "Failed to read value.", error.toException());
+                }
+
+            });
+
+
 
             mAuthListener = new FirebaseAuth.AuthStateListener() {
                 @Override
