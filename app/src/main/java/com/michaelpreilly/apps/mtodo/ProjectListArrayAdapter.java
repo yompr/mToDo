@@ -14,9 +14,9 @@ import java.util.List;
  * Created by dad on 12/3/16.
  */
 
-public class ProjectListArrayAdapter extends ArrayAdapter<chooseProjectActivity.Project> {
+public class ProjectListArrayAdapter extends ArrayAdapter<Project> {
 
-    private final List<chooseProjectActivity.Project> list;
+    private final List<Project> list;
     private final Activity context;
 
     static class ViewHolder {
@@ -24,7 +24,7 @@ public class ProjectListArrayAdapter extends ArrayAdapter<chooseProjectActivity.
 
     }
 
-    public ProjectListArrayAdapter(Activity context, List<chooseProjectActivity.Project> list) {
+    public ProjectListArrayAdapter(Activity context, List<Project> list) {
         super(context, R.layout.activity_choose_project, list);
         this.context = context;
         this.list = list;
@@ -32,7 +32,7 @@ public class ProjectListArrayAdapter extends ArrayAdapter<chooseProjectActivity.
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = null;
+        View view,view2 = null;
 
         if (convertView == null) {
             LayoutInflater inflator = context.getLayoutInflater();
@@ -41,6 +41,7 @@ public class ProjectListArrayAdapter extends ArrayAdapter<chooseProjectActivity.
             viewHolder.name = (TextView) view.findViewById(R.id.name);
 
             view.setTag(viewHolder);
+
         } else {
             view = convertView;
         }

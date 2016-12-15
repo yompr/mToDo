@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private String mUsername;
     private String mPhotoUrl;
+    public static FirebaseDatabase mDatabase;
+    public static DatabaseReference userDBRef;
+    public static DatabaseReference projectsDBRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public static DataSnapshot projectData;
 
@@ -94,18 +97,20 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d("MPR-TEST", "got passed the creation of the activity");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+
 // dNQFMAt252PeCGEl3ZubbwrEI3J2
         //DatabaseReference myRef = database.getReference("/TaskTypes/ToDo/Description");
-           DatabaseReference myRef = database.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2/doneTasks/One/TaskName");
+            userDBRef = mDatabase.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2");
+            // TODO: need to make the path relative for the user
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        userDBRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-               Log.d("MPR-TEST", "Value is: " + value);
+              //  String value = dataSnapshot.getValue(String.class);
+             //  Log.d("MPR-TEST", "Value is: " + value);
             }
 
             @Override
@@ -116,8 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-            DatabaseReference projects = database.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2/Projects");
-            projects.addValueEventListener(new ValueEventListener() {
+            // TODO: need to make the path relative for the user
+            projectsDBRef = mDatabase.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2/Projects");
+            projectsDBRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again

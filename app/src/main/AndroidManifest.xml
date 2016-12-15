@@ -40,11 +40,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.michaelpreilly.apps.mtodo.MainActivity" />
         </activity>
-        <activity android:name=".chooseProjectActivity"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
+        <activity
+            android:name=".chooseProjectActivity"
+            android:label="Select your Project"
             android:noHistory="true"
-            android:label="Select your Project">
-            ></activity>
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
+            >
+        </activity>
+        <activity android:name=".createProjectActivity"
+            android:label="Create New Project"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
+        </activity>
     </application>
 
 </manifest>
