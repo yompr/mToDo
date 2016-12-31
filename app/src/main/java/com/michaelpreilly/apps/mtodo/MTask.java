@@ -4,10 +4,13 @@ package com.michaelpreilly.apps.mtodo;
  * Created by dad on 12/15/16.
  */
 
+import android.util.Log;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,10 +31,77 @@ public  class MTask {
     private String requestor;
     private String assignee;
 
-    public MTask(String key, String taskName) {
-        this.key = key;
-        this.taskName = taskName;
+    public MTask() {
+        // Default constructor required for calls to DataSnapshot.getValue(MTask.class)
     }
+
+    public MTask(String key) {
+        this.key = key;
+
+    }
+
+    public MTask(String key, String theMap) {
+        this.key = key;
+        // Now take apart the MAP
+    }
+
+
+    public MTask(String key, Map<String, String> theMap) {
+        this.key = key;
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        // Now take apart the MAP
+
+        for (Map.Entry<String, String> e : theMap.entrySet()){
+            String myKey="", myValue="";
+
+            //Log.d("MPR-MTASK-MAP",(e.getKey() + ": " + e.getValue()));
+
+            if (e.getKey().equals("Project"))
+            {
+              //  Log.d("MPR-MTASK-MAP","Setting Project Name");
+                this.setProject(e.getValue());
+            }
+
+
+            if (e.getKey().equals("TaskName"))
+            {
+              //  Log.d("MPR-MTASK-MAP","Setting Task Name");
+                this.setTaskName(e.getValue());
+            }
+
+            if (e.getKey().equals("CompletionDate"))
+            {
+                //  Log.d("MPR-MTASK-MAP","Setting Task Name");
+                try {
+                    Date aDate = df.parse(e.getValue());
+                    this.setCompletionDate(aDate);
+                }
+                catch (ParseException ex) {
+                    Log.d("MPR-MTASK-EXCEPTION",ex.toString());
+                }
+            }
+
+            if (e.getKey().equals("CreationDate"))
+            {
+                //  Log.d("MPR-MTASK-MAP","Setting Task Name");
+                //Date creationDate
+                try {
+                Date aDate = df.parse(e.getValue());
+                this.setCreationDate(aDate);
+                }
+                catch (ParseException ex) {
+                    Log.d("MPR-MTASK-EXCEPTION",ex.toString());
+                }
+            }
+
+
+
+        }
+
+
+    }
+
+
 
     public String getKey() {
         return key;

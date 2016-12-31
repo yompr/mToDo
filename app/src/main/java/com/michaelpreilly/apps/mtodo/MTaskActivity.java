@@ -120,7 +120,8 @@ public class MTaskActivity extends AppCompatActivity {
            return;
        }
 
-        MTask newMTask = new MTask("blank", taskName);
+        MTask newMTask = new MTask("blank");
+        newMTask.setTaskName(taskName);
 
         EditText projectNameField = (EditText) findViewById(R.id.projectEdit);
         String projectName = projectNameField.getText().toString();
@@ -148,18 +149,16 @@ public class MTaskActivity extends AppCompatActivity {
 
         Log.d("MPR-mtask","got the click of the save button");
 
-        String myKey = MainActivity.userDBRef.child("notDoneTasks").push().getKey();
+        String myKey = MainActivity.userDBRef.child("incompleteTasks").push().getKey();
         newMTask.setKey(myKey);
         Map<String, Object> mTaskMapped = newMTask.toMap();
         Log.d("MPR-mtask",mTaskMapped.toString());
 
 
-
-
        // Map<String, Object> mTaskMapped = newMTask.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/notDoneTasks/" + myKey, mTaskMapped);
+        childUpdates.put("/incompleteTasks/" + myKey, mTaskMapped);
 
         MainActivity.userDBRef.updateChildren(childUpdates);
 

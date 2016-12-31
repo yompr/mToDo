@@ -34,7 +34,7 @@ public class createProjectActivity extends Activity  {
         myError = (TextView) findViewById(R.id.projectErrorText);
         myError.setText("");
 
-        if ( projName.length() == 0  ) {
+        if ( ( projName.length() == 0  ) || projName.equals("Project Name") ){
             myError.setText("Invalid Project Name");
             return;
         }

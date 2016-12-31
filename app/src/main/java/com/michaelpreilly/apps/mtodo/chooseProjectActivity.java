@@ -35,10 +35,10 @@ public class chooseProjectActivity extends ListActivity {
                 Project c = projectList.get(position);
                 Intent returnIntent = new Intent();
 
-                if (c.getName().equals("<Add New Project>")) {
+               /* if (c.getName().equals("<Add New Project>")) {
 
                     // we could pop up dialog here to get new project name
-                }
+                }*/
                 returnIntent.putExtra("project", c.getName());
                 setResult(RESULT_OK, returnIntent);
 

@@ -22,6 +22,7 @@ public class ProjectListArrayAdapter extends ArrayAdapter<Project> {
     static class ViewHolder {
         protected TextView name;
 
+
     }
 
     public ProjectListArrayAdapter(Activity context, List<Project> list) {
@@ -32,7 +33,7 @@ public class ProjectListArrayAdapter extends ArrayAdapter<Project> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view,view2 = null;
+        View view = null;
 
         if (convertView == null) {
             LayoutInflater inflator = context.getLayoutInflater();

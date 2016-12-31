@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.R.drawable.ic_lock_lock;
@@ -40,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseDatabase mDatabase;
     public static DatabaseReference userDBRef;
     public static DatabaseReference projectsDBRef;
+    public static DatabaseReference utasksDBRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    public static DataSnapshot projectData;
-
+    public static DataSnapshot projectData,taskData;
+    private ListView mTaskListView;
+    private ArrayAdapter<String> mTaskAdapter;
+    public static List<MTask> MTaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         Log.d("MPR-TEST", "Start2");
 
 
@@ -95,22 +101,20 @@ public class MainActivity extends AppCompatActivity {
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
-            Log.d("MPR-TEST", "got passed the creation of the activity");
+          //  Log.d("MPR-TEST", "got passed the creation of the activity " + mFirebaseUser.getUid().toString());
 
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
-// dNQFMAt252PeCGEl3ZubbwrEI3J2
-        //DatabaseReference myRef = database.getReference("/TaskTypes/ToDo/Description");
-            userDBRef = mDatabase.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2");
-            // TODO: need to make the path relative for the user
-        // Read from the database
+            userDBRef = mDatabase.getReference("/Users/"+ mFirebaseUser.getUid().toString()  );
+
+             // Read from the database
         userDBRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
               //  String value = dataSnapshot.getValue(String.class);
-             //  Log.d("MPR-TEST", "Value is: " + value);
+             //  Log.d("MPR-TEST", "Top Level User Data changed);
             }
 
             @Override
@@ -120,15 +124,51 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+            Log.d("MPR-TEST","/Users/"+mFirebaseUser.getUid().toString()+"/incompleteTasks");
+            utasksDBRef = mDatabase.getReference("/Users/"+mFirebaseUser.getUid().toString()+"/incompleteTasks");
 
-            // TODO: need to make the path relative for the user
-            projectsDBRef = mDatabase.getReference("/Users/dNQFMAt252PeCGEl3ZubbwrEI3J2/Projects");
+            utasksDBRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    taskData = dataSnapshot;
+                    Log.d("MPR-TEST", "Task Data changed");
+                    populateTaskList();
+                    mTaskListView = (ListView) findViewById(R.id.mTaskListView);
+                    if (MTaskList == null){
+                        Log.d("MPR-MTASK", "MTASKLIST is NULL");
+                    }
+
+                    ArrayAdapter<MTask> adapter = new MTaskListArrayAdapter(MainActivity.this, MTaskList);
+
+                    if (adapter == null){
+                        Log.d("MPR-MTASK", "adapter is NULL");
+                    }
+
+                    mTaskListView.setAdapter(adapter);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w("MPR-UTASK-CANCEL", "Failed to read value.", error.toException());
+                }
+
+            });
+
+
+
+
+            projectsDBRef = mDatabase.getReference("/Users/"+mFirebaseUser.getUid().toString()+"/Projects");
             projectsDBRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
                     projectData = dataSnapshot;
+
 
                 }
 
@@ -162,10 +202,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             };
-
-
+/*
+            mTaskListView = (ListView) findViewById(R.id.mTaskListView);
+            ArrayAdapter adapter = new MTaskListArrayAdapter(this, MTaskList);
+            mTaskListView.setAdapter(adapter); */
 
         }
+/*
+
+        */
+
     }
         @Override
         public void onStart() {
@@ -205,5 +251,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void populateTaskList() {
+        MTaskList = new ArrayList<MTask>();
+
+        for (DataSnapshot data : MainActivity.taskData.getChildren()) {
+           // MTask myNewMTask = data.getValue(MTask.class);
+            // Log.d("MPR-LIST-BUILD1",String.valueOf(data.getKey())+", ");
+
+            //Log.d("MPR-LIST-BUILD",myNewMTask.getKey().toString());
+
+          //  Log.d("MPR-LIST-BUILD2",data.getValue().toString());
+            Map<String, String> map = (Map<String, String>) data.getValue();
+
+            MTask myNewMTask = new MTask(data.getKey(),map);
+
+
+            MTaskList.add(myNewMTask);
+        }
+
+
+
     }
 }
